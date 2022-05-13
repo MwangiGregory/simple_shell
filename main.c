@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "shell.h"
 
@@ -8,7 +10,20 @@
 int main(void)
 {
 	char *prompt_text = "$";
+	char *buf = NULL;
+	size_t inp_size = 0;
 
-	_putchar(prompt_text);
+	/*infinte loop as long as prompt_text is valid*/
+	while (prompt_text)
+	{
+		_putchar(prompt_text);
+		if (getline(&buf, &inp_size, stdin) == -1)
+		{
+			free(buf);
+			perror("\nFailure to read line: ");
+		}
+		else
+			_putchar(buf);
+	}
 	return (0);
 }
