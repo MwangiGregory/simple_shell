@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include "shell.h"
 
-int count_tokens(char *buf);
 
 /**
  * main - entry point
@@ -25,29 +24,8 @@ int main(void)
 			free(buf);
 			perror("\nFailure to read line: ");
 		}
-
-		printf("%d\n",count_tokens(buf));
-		
+		/*TODO: free this memory*/
+		strings = malloc(count_tokens(buf) * sizeof(char **));
 	}
 	return (0);
-}
-/**
- * count_strings - finds the number of words/token in string
- * pointed to by buf
- * @buf: pointer to a string
- * Return: number of tokens in string buf
- */
-int count_tokens(char *buf)
-{
-	int i = 0;
-	int no_of_tokens = 1;/*min no. of strings will always be 1*/
-	
-	while (buf[i])
-	{
-		if (buf[i] == ' ')
-			no_of_tokens++;
-
-		i++;
-	}
-	return (no_of_tokens);
 }
