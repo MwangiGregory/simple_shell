@@ -12,6 +12,7 @@ int main(void)
 	char *prompt_text = "$";
 	char *buf = NULL;
 	size_t inp_size = 0;
+	char **strings;
 
 	/*infinte loop as long as prompt_text is valid*/
 	while (prompt_text)
@@ -24,7 +25,6 @@ int main(void)
 		}
 		/*TODO: free this memory*/
 		strings = malloc(count_tokens(buf) * sizeof(char **));
-		else
 			_putchar(buf);
 	}
 	return (0);
