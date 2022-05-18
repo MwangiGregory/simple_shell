@@ -1,7 +1,3 @@
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "shell.h"
 
 /**
@@ -10,12 +6,12 @@
  */
 int main(void)
 {
-	char *prompt_text = "$";
-	char *buf = NULL;
+	int i;
+	char **command;
 	size_t inp_size = 0;
-	char **tokens;
-	int i, status;
-	pid_t my_pid;
+	char *prompt_text = "$", *buf = NULL;
+	char *path_var = getenv("PATH");
+	char **path_directories = create_arr_of_dirs(path_var);
 
 	/*infinte loop as long as prompt_text is valid*/
 	while (prompt_text)
@@ -25,6 +21,7 @@ int main(void)
 		{
 			free(buf);
 			perror("Failure to read line");
+			continue;
 		}
 		/*change newline char to null char*/
 		for (i = 0; buf[i]; i++)
@@ -32,29 +29,13 @@ int main(void)
 			if (buf[i] == '\n')
 				buf[i] = '\0';
 		}
-
-		/*TODO: free this memory*/
-		tokens = malloc(count_tokens(buf) * sizeof(char *));
-		split_string(buf, tokens, " ");
-
-		my_pid = fork();
-		if (my_pid == -1)
+		command = command_search(buf, path_directories);	
+		if (!command)
 		{
-			perror("Unable to create child process");
+			perror("Invalid command");
 			continue;
 		}
-		if (my_pid == 0)
-		{
-			if (execve(tokens[0], tokens, NULL) == -1)
-			{
-				perror("Unable to execute");
-				_exit(0);
-			}
-			_exit(0);
-		}
-		else
-			wait(&status);
-		free(tokens);
+		execute_command(command[0], command);
 	}
 	return (0);
 }
