@@ -1,5 +1,5 @@
 /**
- * count_strings - finds the number of words/token in string
+ * count_tokens - finds the number of words/token in string
  * pointed to by buf
  * @buf: pointer to a string
  * Return: number of tokens in string buf
