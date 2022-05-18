@@ -5,12 +5,27 @@
 #include "shell.h"
 
 /**
+ * pid_zero - when my_pid == 0
+ * @tokens: array of string tokens
+ * Return: nothing
+ */
+void pid_zero(char **tokens)
+{
+	if (execve(tokens[0], tokens, NULL) == -1)
+	{
+		perror("Unable to execute");
+		_exit(0);
+	}
+	_exit(0);
+}
+
+/**
  * main - entry point
  * Return: Always zero
  */
 int main(void)
 {
-	char *prompt_text = "$";
+	char *prompt_text = "$ ";
 	char *buf = NULL;
 	size_t inp_size = 0;
 	char **tokens;
@@ -44,14 +59,7 @@ int main(void)
 			continue;
 		}
 		if (my_pid == 0)
-		{
-			if (execve(tokens[0], tokens, NULL) == -1)
-			{
-				perror("Unable to execute");
-				_exit(0);
-			}
-			_exit(0);
-		}
+			pid_zero(tokens);
 		else
 			wait(&status);
 		free(tokens);
