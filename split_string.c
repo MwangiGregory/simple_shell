@@ -17,6 +17,8 @@ void split_string(char *line, char **strings, char *delim)
 	while (token)
 	{
 		token = strtok(NULL, delim);
+		if (!token)
+			break;
 		strings[i] = token;
 		i++;
 	}
