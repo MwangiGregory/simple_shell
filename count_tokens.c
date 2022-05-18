@@ -1,5 +1,3 @@
-#include "shell.h"
-
 /**
  * count_strings - finds the number of words/token in string
  * pointed to by buf
@@ -17,5 +15,6 @@ int count_tokens(char *buf)
 			no_of_tokens++;
 		i++;
 	}
+	no_of_tokens++;
 	return (no_of_tokens);
 }
