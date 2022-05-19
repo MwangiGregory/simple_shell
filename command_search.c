@@ -15,13 +15,21 @@ char **command_search(char *path, char **dirs)
 
 	if (!path || !dirs)
 		return (NULL);
+	/*freed*/
+	len = _strlen(path);
+	temp = malloc(len * sizeof(char));
+	temp = _strcpy(temp, path);
 	strings = malloc(words * sizeof(char *));
+	split_string(temp, strings, " ");
+	res = stat(strings[0], &statbuf);
+	if (res == 0)
+		return (strings);
 
 	for (i = 0; dirs[i]; i++)
 	{
 		len = _strlen(path) + _strlen(dirs[i]) + 2;
 
-		/*TODO: free this memory*/
+		/*freed*/
 		temp = malloc(len * sizeof(char));
 		if (!temp)
 			return (NULL);
