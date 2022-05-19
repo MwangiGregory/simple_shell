@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * main - entry point
  * Return: Always zero
@@ -8,9 +7,8 @@
 int main(void)
 {
 	int i;
-	char **command;
 	size_t inp_size = 0;
-	char *prompt_text = "$", *buf = NULL;
+	char *prompt_text = "($)", *buf = NULL, **command;
 	char *path_var = getenv("PATH");
 	char **path_directories = create_arr_of_dirs(path_var);
 
@@ -30,13 +28,14 @@ int main(void)
 			if (buf[i] == '\n')
 				buf[i] = '\0';
 		}
-		command = command_search(buf, path_directories);	
+		built_ins(buf);
+		command = command_search(buf, path_directories);
 		if (!command)
 		{
-			perror("Invalid command");
+			perror("./hsh");
 			continue;
 		}
-		execute_command(command[0], command);
+		execute_command(command);
 	}
 	return (0);
 }
