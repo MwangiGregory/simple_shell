@@ -20,9 +20,9 @@ void execute_command(char **arr)
 		if (execve(arr[0], arr, NULL) == -1)
 		{
 			perror("Unable to execute");
-			_exit(0);
+			__exit(0);
 		}
-		_exit(0);
+		__exit(0);
 	}
 	else
 		wait(&status);
