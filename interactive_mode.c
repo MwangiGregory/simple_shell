@@ -1,16 +1,14 @@
 #include "shell.h"
 
 /**
- * main - entry point
+ * interactive_mode - runs an interactive shell
  * Return: Always zero
  */
-int main(void)
+void interactive_mode(char **dirs)
 {
 	int i;
 	size_t inp_size = 0;
 	char *prompt_text = "($)", *buf = NULL, **command;
-	char *path_var = getenv("PATH");
-	char **path_directories = create_arr_of_dirs(path_var);
 
 	/*infinte loop as long as prompt_text is valid*/
 	while (prompt_text)
@@ -29,7 +27,7 @@ int main(void)
 				buf[i] = '\0';
 		}
 		built_ins(buf);
-		command = command_search(buf, path_directories);
+		command = command_search(buf, dirs);
 		if (!command)
 		{
 			perror("./hsh");
@@ -37,5 +35,4 @@ int main(void)
 		}
 		execute_command(command);
 	}
-	return (0);
 }

@@ -15,10 +15,13 @@ char *_getenv(char *name)
 		current_var = environ[i];
 		for (j = 0; ; j++)
 		{
-			if (current_var[j] == '=')
-				return (environ[i]);
-			if (current_var[j] == name[j])
+			if (*current_var == '=')
+				return (++current_var);
+			if (*current_var == name[j])
+			{
+				current_var++;
 				continue;
+			}
 			else
 				break;
 		}

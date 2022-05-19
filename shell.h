@@ -12,6 +12,7 @@
 
 extern char **environ;
 
+void interactive_mode(char **dirs);
 void _putchar(char *s);
 void split_string(char *line, char **strings, char *delim);
 int count_tokens(char *buf);
